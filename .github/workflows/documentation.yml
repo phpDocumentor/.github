@@ -12,10 +12,10 @@ on: # yamllint disable-line rule:truthy
         description: "The component to deploy the documentation for"
         required: true
         type: "string"
+    secrets:
       token:
         description: "The token to use to push to the docs repository"
         required: true
-        type: "string"
 
 jobs:
   documentation:
@@ -46,7 +46,7 @@ jobs:
         uses: "actions/checkout@v6"
         with:
           repository: "phpDocumentor/docs"
-          token: "${{ inputs.token }}"
+          token: "${{ secrets.token }}"
           path: "docs"
 
       - name: "Download"
@@ -68,5 +68,5 @@ jobs:
         uses: "ad-m/github-push-action@master"
         with:
           directory: "docs"
-          github_token: "${{ inputs.token }}"
+          github_token: "${{ secrets.token }}"
           repository: "phpDocumentor/docs"
