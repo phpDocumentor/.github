@@ -4,10 +4,14 @@ on: # yamllint disable-line rule:truthy
   workflow_call:
     inputs:
       deploy:
-        description: "Whether to include upcoming releases in the auto-detection"
+        description: "Whether to deploy the generated documentation to the docs repository"
         default: false
         required: false
         type: "boolean"
+      component:
+        description: "The component to deploy the documentation for"
+        required: true
+        type: "string"
 
 jobs:
   documentation:
