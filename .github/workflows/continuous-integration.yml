@@ -46,7 +46,7 @@ jobs:
 
       - id: "supported-versions-detect"
         if: "${{ inputs.php-versions == 'auto-detect' }}"
-        uses: "WyriHaximus/github-action-composer-php-versions-in-range@v1"
+        uses: "WyriHaximus/github-action-composer-php-versions-in-range@v2"
         with:
           upcomingReleases: "${{ inputs.upcoming-releases }}"
           nightly: "${{ inputs.upcoming-releases }}"
