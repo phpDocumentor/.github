@@ -41,7 +41,7 @@ jobs:
       extensions: "${{ steps.supported-versions-matrix.outputs.extensions }}"
       version: "${{ steps.supported-versions-matrix.outputs.version }}"
     steps:
-      - uses: "actions/checkout@v6"
+      - uses: "actions/checkout@v7"
         if: "${{ inputs.php-versions == 'auto-detect' }}"
 
       - id: "supported-versions-detect"
@@ -79,7 +79,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v6"
+        uses: "actions/checkout@v7"
 
       - name: "Set up PHP"
         uses: "shivammathur/setup-php@2.37.2"
