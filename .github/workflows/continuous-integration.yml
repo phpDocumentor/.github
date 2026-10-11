@@ -32,6 +32,11 @@ on: # yamllint disable-line rule:truthy
         default: "unit"
         required: false
         type: "string"
+      phpunit-env:
+        description: "Extra environment variables for the phpunit step, one per line as KEY=value"
+        default: ""
+        required: false
+        type: "string"
 
 jobs:
   supported-versions-matrix:
@@ -92,6 +97,21 @@ jobs:
         run: |
           echo "COMPOSER_ROOT_VERSION=${{ inputs.composer-root-version }}" >> $GITHUB_ENV
         if: "${{ inputs.composer-root-version }}"
+
+      - name: "Set phpunit env vars"
+        if: "${{ inputs.phpunit-env }}"
+        shell: "bash"
+        env:
+          PHPUNIT_ENV: "${{ inputs.phpunit-env }}"
+        run: |
+          while IFS= read -r line; do
+            [[ -z "$line" ]] && continue
+            [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*=.*$ ]] || {
+              echo "Invalid phpunit env entry: $line" >&2
+              exit 1
+            }
+            echo "$line" >> "$GITHUB_ENV"
+          done <<< "$PHPUNIT_ENV"
 
       - name: "Remove platform requirement"
         run: "composer config --unset platform"
